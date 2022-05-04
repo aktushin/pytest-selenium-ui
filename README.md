@@ -1,1 +1,1 @@
-# pytest-seleniu-framework
+# pytest-selenium-framework
