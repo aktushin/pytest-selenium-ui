@@ -6,7 +6,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 @pytest.fixture
 def driver(request):
     driver = webdriver.Chrome(ChromeDriverManager().install())
-    request.cls.dirver = driver
+    request.driver = driver
 
     yield driver
 
