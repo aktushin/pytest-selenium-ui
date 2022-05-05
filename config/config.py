@@ -10,4 +10,5 @@ LARGE_TIMEOUT = 20
 
 # URLs
 TEXT_BOX_URL = 'https://demoqa.com/text-box'
+CHECK_BOX_URL = 'https://demoqa.com/checkbox'
 

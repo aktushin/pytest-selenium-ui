@@ -1,3 +1,5 @@
+import random
+
 from selenium.webdriver.common.by import By
 
 from pages.base_page import BasePage
@@ -40,3 +42,41 @@ class TextBoxPage(BasePage):
         expected_data = [output_full_name, output_email, output_current_address, output_permanent_address]
 
         return expected_data
+
+
+class CheckBoxPage(BasePage):
+    EXPAND_BUTTON = (By.CSS_SELECTOR, 'button[class="rct-option rct-option-expand-all"]')
+    ALL_CHECK_BOXES = (By.CSS_SELECTOR, 'span[class="rct-checkbox"]')
+    SELECTED_CHECK_BOXES_TITLES = (By.XPATH, '//*[@class="rct-icon rct-icon-check"]/ancestor::label/child::span[@class="rct-title"]')
+    OUTPUT_CHECK_BOXES_TITLES = (By.CSS_SELECTOR, 'span[class="text-success"]')
+
+    def select_random_check_boxes(self):
+        self.is_present(self.EXPAND_BUTTON).click()
+        check_boxes = self.are_present(self.ALL_CHECK_BOXES)
+        check_boxes_count = len(check_boxes)
+        count = 0
+        while count != check_boxes_count:
+            random_number = random.randint(0, check_boxes_count - 1)
+            random_check_box = check_boxes[random_number]
+            random_check_box.click()
+            count += 1
+
+    def get_selected_check_boxes_titles(self):
+        titles = self.are_present(self.SELECTED_CHECK_BOXES_TITLES)
+        titles_list = []
+
+        for title in titles:
+            title_refactor = title.text.lower().replace('.doc', '').replace(' ', '')
+            titles_list.append(title_refactor)
+
+        return titles_list
+
+    def get_output_check_boxes_titles(self):
+        titles = self.are_present(self.OUTPUT_CHECK_BOXES_TITLES)
+        titles_list = []
+
+        for title in titles:
+            title_refactor = title.text.lower()
+            titles_list.append(title_refactor)
+
+        return titles_list
