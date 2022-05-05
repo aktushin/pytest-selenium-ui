@@ -9,7 +9,7 @@ from selenium.webdriver.chrome.options import Options as ChromeOptions
 
 def pytest_addoption(parser):
     parser.addoption('--browser', action='store', default='chrome', help='Choose browser: chrome or firefox')
-    parser.addoption('--headless', action='store', default=True, help='Type True for activate headless mode')
+    parser.addoption('--headless', action='store', default=False, help='Type True for activate headless mode')
 
 
 @pytest.fixture
