@@ -9,5 +9,5 @@ TIMEOUT = 10
 LARGE_TIMEOUT = 20
 
 # URLs
-BASE_URL = ''
+TEXT_BOX_URL = 'https://demoqa.com/text-box'
 
