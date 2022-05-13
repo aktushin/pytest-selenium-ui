@@ -1,3 +1,5 @@
+import time
+
 import logging.config
 
 from selenium.webdriver.support.ui import WebDriverWait
@@ -73,7 +75,7 @@ class BasePage:
             )
             logger.debug(f'Element with locator {locator} was found.')
         except TimeoutException:
-            msg = f'TIMEOUT EXCEPTION! Element with locator {locator} not found. Check locator or increase timeout.'
+            msg = f'TIMEOUT EXCEPTION! Element with locator {locator} not found. Maybe, element not clickable?'
             logger.error(msg)
             raise Exception(msg)
 
@@ -126,3 +128,22 @@ class BasePage:
         element.click()
         element.clear()
         element.send_keys(keys)
+
+    def current_url(self):
+        return self.driver.current_url
+
+    def wait_page_loaded(self):
+        page_loaded = False
+
+        # Wait until page loaded (and scroll it, to make sure all objects will be loaded):
+        while not page_loaded:
+            time.sleep(0.5)
+
+            try:
+                self.driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
+                page_loaded = self.driver.execute_script("return document.readyState == 'complete';")
+            except Exception as e:
+                logger.error(e)
+                raise
+
+        self.driver.execute_script('window.scrollTo(document.body.scrollHeight, 0);')

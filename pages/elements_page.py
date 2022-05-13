@@ -3,11 +3,11 @@ import random
 from selenium.webdriver.common.by import By
 
 from pages.base_page import BasePage
-from data.data import TextBoxData
+from data.data import InputData
 
 
 class TextBoxPage(BasePage):
-    input_data = TextBoxData()
+    input_data = InputData()
 
     FULL_NAME = (By.CSS_SELECTOR, 'input[id="userName"]')
     EMAIL = (By.CSS_SELECTOR, 'input[id="userEmail"]')
@@ -80,3 +80,90 @@ class CheckBoxPage(BasePage):
             titles_list.append(title_refactor)
 
         return titles_list
+
+
+class RadioButtonPage(BasePage):
+    YES_RB = (By.CSS_SELECTOR, 'label[for="yesRadio"]')
+    IMPRESSIVE_RB = (By.CSS_SELECTOR, 'label[for="impressiveRadio"]')
+    NO_RB = (By.CSS_SELECTOR, 'label[for="noRadio"]')
+    OUTPUT_RESULT = (By.CSS_SELECTOR, 'span[class="text-success"]')
+
+    def click_on_radiobutton(self, radio_button):
+        rb_name = {'yes': self.YES_RB,
+                   'impressive': self.IMPRESSIVE_RB,
+                   'no': self.NO_RB}
+
+        self.is_clickable(rb_name[radio_button]).click()
+        output_result = self.is_present(self.OUTPUT_RESULT).text
+
+        return output_result
+
+
+class WebTablesPage(BasePage):
+    input_data = InputData()
+
+    ADD_BUTTON = (By.CSS_SELECTOR, 'button[id="addNewRecordButton"]')
+    FIRST_NAME = (By.CSS_SELECTOR, 'input[id="firstName"]')
+    LAST_NAME = (By.CSS_SELECTOR, 'input[id="lastName"]')
+    EMAIL = (By.CSS_SELECTOR, 'input[id="userEmail"]')
+    AGE = (By.CSS_SELECTOR, 'input[id="age"]')
+    SALARY = (By.CSS_SELECTOR, 'input[id="salary"]')
+    DEPARTMENT = (By.CSS_SELECTOR, 'input[id="department"]')
+
+    SUBMIT_BUTTON = (By.CSS_SELECTOR, 'button[id="submit"]')
+    TABLE_DATA = (By.CSS_SELECTOR, 'div[class="rt-tr-group"]')
+
+    SEARCH_FIELD = (By.CSS_SELECTOR, 'input[id="searchBox"]')
+    SEARCH_BUTTON = (By.CSS_SELECTOR, 'span[class="input-group-text"]')
+    DELETE_BUTTON = (By.CSS_SELECTOR, 'span[title="Delete"]')
+    EDIT_BUTTON = (By.CSS_SELECTOR, 'span[title="Edit"]')
+
+    def __fill_form_fields(self):
+        first_name = self.input_data.FIRST_NAME
+        last_name = self.input_data.LAST_NAME
+        email = self.input_data.EMAIL
+        age = self.input_data.AGE
+        salary = self.input_data.SALARY
+        department = self.input_data.DEPARTMENT
+
+        self.send_keys(self.FIRST_NAME, first_name)
+        self.send_keys(self.LAST_NAME, last_name)
+        self.send_keys(self.EMAIL, email)
+        self.send_keys(self.AGE, age)
+        self.send_keys(self.SALARY, salary)
+        self.send_keys(self.DEPARTMENT, department)
+
+        return [first_name, last_name, str(age), email, str(salary), department]
+
+    def add_new_record(self):
+        self.is_present(self.ADD_BUTTON).click()
+        new_record_data = self.__fill_form_fields()
+        self.is_clickable(self.SUBMIT_BUTTON).click()
+
+        return new_record_data
+
+    def get_table_data(self):
+        table_elements = self.are_present(self.TABLE_DATA)
+        table_data = []
+        for row in table_elements:
+            table_data.append(row.text.splitlines())
+
+        return table_data
+
+    def search_record(self, keys):
+        self.send_keys(self.SEARCH_FIELD, keys)
+        self.is_present(self.SEARCH_BUTTON).click()
+        search_result = self.get_table_data()
+
+        return search_result
+
+    def delete_record(self):
+        self.is_present(self.DELETE_BUTTON).click()
+
+    def edit_record(self):
+
+        self.is_present(self.EDIT_BUTTON).click()
+        new_record_data = self.__fill_form_fields()
+        self.is_clickable(self.SUBMIT_BUTTON).click()
+
+        return new_record_data
