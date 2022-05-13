@@ -7,9 +7,6 @@ __pycache__/
 *.so
 
 # Distribution / packaging
-debug.py
-geckodriver.log
-logs/
 .Python
 build/
 develop-eggs/
@@ -97,3 +94,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# My files
+tests/test_debug.py
+debug.py
+geckodriver.log
+logs/
