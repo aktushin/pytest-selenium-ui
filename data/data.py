@@ -15,4 +15,4 @@ class InputData:
     AGE = random.randint(0, 60)
     SALARY = random.randint(5000, 10000)
     ADDRESS = faker.address()
-    DEPARTMENT = department[random.randint(0, 5)]
+    DEPARTMENT = department[random.randint(0, 4)]

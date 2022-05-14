@@ -1,4 +1,5 @@
 import random
+import time
 
 from selenium.webdriver.common.by import By
 
@@ -29,7 +30,7 @@ class TextBoxPage(BasePage):
         self.send_keys(self.EMAIL, email)
         self.send_keys(self.CURRENT_ADDRESS, current_address)
         self.send_keys(self.PERMANENT_ADDRESS, permanent_address)
-        self.is_visible(self.SUBMIT_BUTTON).click()
+        self.click(self.SUBMIT_BUTTON)
         input_data = [full_name, email, current_address, permanent_address]
 
         return input_data
@@ -51,7 +52,7 @@ class CheckBoxPage(BasePage):
     OUTPUT_CHECK_BOXES_TITLES = (By.CSS_SELECTOR, 'span[class="text-success"]')
 
     def select_random_check_boxes(self):
-        self.is_present(self.EXPAND_BUTTON).click()
+        self.is_clickable(self.EXPAND_BUTTON).click()
         check_boxes = self.are_present(self.ALL_CHECK_BOXES)
         check_boxes_count = len(check_boxes)
         count = 0

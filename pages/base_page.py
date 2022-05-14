@@ -4,7 +4,7 @@ import logging.config
 
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import TimeoutException, ElementClickInterceptedException
 
 from config.logger_config import LOGGING
 from config.config import TIMEOUT
@@ -124,13 +124,21 @@ class BasePage:
         self.driver.execute_script('arguments[0].ScrollIntoView;', element)
 
     def send_keys(self, locator, keys):
-        element = self.is_present(locator)
-        element.click()
+        element = self.is_clickable(locator)
+
         element.clear()
         element.send_keys(keys)
 
     def current_url(self):
         return self.driver.current_url
+
+    def click(self, locator):
+        element = self.is_clickable(locator)
+
+        try:
+            element.click()
+        except ElementClickInterceptedException:
+            self.driver.execute_script("arguments[0].click();", element)
 
     def wait_page_loaded(self):
         page_loaded = False
