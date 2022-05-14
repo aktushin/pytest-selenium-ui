@@ -52,14 +52,14 @@ class CheckBoxPage(BasePage):
     OUTPUT_CHECK_BOXES_TITLES = (By.CSS_SELECTOR, 'span[class="text-success"]')
 
     def select_random_check_boxes(self):
-        self.is_clickable(self.EXPAND_BUTTON).click()
+        self.click(self.EXPAND_BUTTON)
         check_boxes = self.are_present(self.ALL_CHECK_BOXES)
         check_boxes_count = len(check_boxes)
         count = 0
         while count != check_boxes_count:
             random_number = random.randint(0, check_boxes_count - 1)
             random_check_box = check_boxes[random_number]
-            random_check_box.click()
+            self.click(random_check_box)
             count += 1
 
     def get_selected_check_boxes_titles(self):
