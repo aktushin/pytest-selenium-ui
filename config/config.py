@@ -1,5 +1,9 @@
 import os
+import logging.config
+
 from dotenv import load_dotenv
+
+from config.logger_config import LOGGING
 
 load_dotenv()
 
@@ -20,3 +24,5 @@ WEB_TABLES_URL = 'https://demoqa.com/webtables'
 USER_NAME = os.getenv('USER_NAME')
 PASSWORD = os.getenv('PASSWORD')
 
+logging.config.dictConfig(LOGGING)
+logger = logging.getLogger('logger')
