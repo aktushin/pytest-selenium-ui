@@ -1,3 +1,7 @@
+import time
+
+import pytest
+
 from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablesPage
 from config.config import TEXT_BOX_URL, CHECK_BOX_URL, RADIO_BUTTON_URL, WEB_TABLES_URL
 
@@ -85,4 +89,27 @@ class TestElementsPage:
             table_data = web_table_page.get_table_data()
 
             assert new_data in table_data
+
+        @pytest.mark.parametrize('input_rows_count', [5, 10, 20, 25, 50, 100])
+        def test_change_rows_count(self, driver, input_rows_count):
+            web_table_page = WebTablesPage(driver)
+            web_table_page.open(WEB_TABLES_URL)
+
+            web_table_page.select_rows_count(input_rows_count)
+            output_rows_count = web_table_page.check_rows_count()
+
+            assert input_rows_count == output_rows_count
+
+            time.sleep(3)
+
+        @pytest.mark.parametrize('input_rows_count', [5, 10, 20, 25, 50, 100])
+        def test_return_back_rows_count(self, driver, input_rows_count):
+            web_table_page = WebTablesPage(driver)
+            web_table_page.open(WEB_TABLES_URL)
+
+            web_table_page.select_rows_count(input_rows_count)
+            web_table_page.select_rows_count(10)
+            output_rows_count = web_table_page.check_rows_count()
+
+            assert output_rows_count == 10
 

@@ -1,17 +1,11 @@
 import time
 
-import logging.config
-
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.common.exceptions import TimeoutException, ElementClickInterceptedException
 
-from config.logger_config import LOGGING
+from config.config import logger
 from config.config import TIMEOUT
-
-
-logging.config.dictConfig(LOGGING)
-logger = logging.getLogger('logger')
 
 
 class BasePage:

@@ -22,7 +22,8 @@ def driver(request):
         options = ChromeOptions()
         if headless_mode:
             options.add_argument('--headless')
-        options.add_argument('--start-maximized')
+        # options.add_argument('--start-maximized')
+        options.add_argument('--window-size=1920,1080')
         driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
     elif browser_name == 'firefox':
         driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()))

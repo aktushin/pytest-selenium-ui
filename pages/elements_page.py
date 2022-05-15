@@ -1,10 +1,10 @@
 import random
-import time
 
 from selenium.webdriver.common.by import By
 
 from pages.base_page import BasePage
 from data.data import InputData
+from config.config import logger
 
 
 class TextBoxPage(BasePage):
@@ -30,9 +30,9 @@ class TextBoxPage(BasePage):
         self.send_keys(self.EMAIL, email)
         self.send_keys(self.CURRENT_ADDRESS, current_address)
         self.send_keys(self.PERMANENT_ADDRESS, permanent_address)
-        self.click(self.SUBMIT_BUTTON)
+        self.is_clickable(self.SUBMIT_BUTTON).click()
         input_data = [full_name, email, current_address, permanent_address]
-
+        logger.debug(f'Filling form fields with data: {input_data}')
         return input_data
 
     def check_output_data(self):
@@ -52,14 +52,14 @@ class CheckBoxPage(BasePage):
     OUTPUT_CHECK_BOXES_TITLES = (By.CSS_SELECTOR, 'span[class="text-success"]')
 
     def select_random_check_boxes(self):
-        self.click(self.EXPAND_BUTTON)
+        self.is_clickable(self.EXPAND_BUTTON)
         check_boxes = self.are_present(self.ALL_CHECK_BOXES)
         check_boxes_count = len(check_boxes)
         count = 0
         while count != check_boxes_count:
             random_number = random.randint(0, check_boxes_count - 1)
             random_check_box = check_boxes[random_number]
-            self.click(random_check_box)
+            random_check_box.click()
             count += 1
 
     def get_selected_check_boxes_titles(self):
@@ -119,7 +119,16 @@ class WebTablesPage(BasePage):
     DELETE_BUTTON = (By.CSS_SELECTOR, 'span[title="Delete"]')
     EDIT_BUTTON = (By.CSS_SELECTOR, 'span[title="Edit"]')
 
-    def __fill_form_fields(self):
+    SELECT_ROWS_COUNT = (By.CSS_SELECTOR, 'select[aria-label="rows per page"]')
+    ROWS_5 = (By.CSS_SELECTOR, 'option[value="5"]')
+    ROWS_10 = (By.CSS_SELECTOR, 'option[value="10"]')
+    ROWS_20 = (By.CSS_SELECTOR, 'option[value="20"]')
+    ROWS_25 = (By.CSS_SELECTOR, 'option[value="25"]')
+    ROWS_50 = (By.CSS_SELECTOR, 'option[value="50"]')
+    ROWS_100 = (By.CSS_SELECTOR, 'option[value="100"]')
+    ONE_ROW = (By.CSS_SELECTOR, 'div[role="rowgroup"]')
+
+    def __filling_form_fields(self):
         first_name = self.input_data.FIRST_NAME
         last_name = self.input_data.LAST_NAME
         email = self.input_data.EMAIL
@@ -138,7 +147,7 @@ class WebTablesPage(BasePage):
 
     def add_new_record(self):
         self.is_present(self.ADD_BUTTON).click()
-        new_record_data = self.__fill_form_fields()
+        new_record_data = self.__filling_form_fields()
         self.is_clickable(self.SUBMIT_BUTTON).click()
 
         return new_record_data
@@ -164,7 +173,26 @@ class WebTablesPage(BasePage):
     def edit_record(self):
 
         self.is_present(self.EDIT_BUTTON).click()
-        new_record_data = self.__fill_form_fields()
+        new_record_data = self.__filling_form_fields()
         self.is_clickable(self.SUBMIT_BUTTON).click()
 
         return new_record_data
+
+    def select_rows_count(self, input_rows_count):
+        input_rows_count = str(input_rows_count)
+        rows_dict = {
+            '5': self.ROWS_5,
+            '10': self.ROWS_10,
+            '20': self.ROWS_20,
+            '25': self.ROWS_25,
+            '50': self.ROWS_50,
+            '100': self.ROWS_100
+        }
+        self.is_present(self.SELECT_ROWS_COUNT).click()
+        self.is_present(rows_dict[input_rows_count]).click()
+
+    def check_rows_count(self):
+
+        rows_count = len(self.are_present(self.ONE_ROW))
+        return rows_count
+
