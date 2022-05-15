@@ -31,4 +31,4 @@ def driver(request):
 
     yield driver
 
-    # driver.quit()
+    driver.quit()

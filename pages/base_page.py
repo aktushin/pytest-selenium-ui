@@ -2,6 +2,7 @@ import time
 
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import TimeoutException, ElementClickInterceptedException
 
 from config.config import logger
@@ -119,7 +120,7 @@ class BasePage:
 
     def send_keys(self, locator, keys):
         element = self.is_clickable(locator)
-
+        element.click()
         element.clear()
         element.send_keys(keys)
 
@@ -133,6 +134,18 @@ class BasePage:
             element.click()
         except ElementClickInterceptedException:
             self.driver.execute_script("arguments[0].click();", element)
+
+    def right_click(self, locator):
+        element = self.is_clickable(locator)
+
+        actions = ActionChains(self.driver)
+        actions.context_click(element).perform()
+
+    def double_click(self, locator):
+        element = self.is_clickable(locator)
+
+        actions = ActionChains(self.driver)
+        actions.double_click(element).perform()
 
     def wait_page_loaded(self):
         page_loaded = False

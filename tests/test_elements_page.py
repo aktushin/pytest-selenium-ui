@@ -2,8 +2,8 @@ import time
 
 import pytest
 
-from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablesPage
-from config.config import TEXT_BOX_URL, CHECK_BOX_URL, RADIO_BUTTON_URL, WEB_TABLES_URL
+from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablesPage, ButtonsPage
+from config.config import TEXT_BOX_URL, CHECK_BOX_URL, RADIO_BUTTON_URL, WEB_TABLES_URL, BUTTONS_URL
 
 
 class TestElementsPage:
@@ -113,3 +113,15 @@ class TestElementsPage:
 
             assert output_rows_count == 10
 
+    class TestButtons:
+
+        @pytest.mark.parametrize('click_type, exp_output_message', [('double_click', 'You have done a double click'),
+                                                                    ('right_click', 'You have done a right click'),
+                                                                    ('click', 'You have done a dynamic click')])
+        def test_various_clicks(self, driver, click_type, exp_output_message):
+            buttons_page = ButtonsPage(driver)
+            buttons_page.open(BUTTONS_URL)
+
+            output_message = buttons_page.do_click(click_type)
+
+            assert output_message == exp_output_message

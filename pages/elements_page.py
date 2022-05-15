@@ -1,6 +1,7 @@
 import random
 
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
 
 from pages.base_page import BasePage
 from data.data import InputData
@@ -147,6 +148,7 @@ class WebTablesPage(BasePage):
 
     def add_new_record(self):
         self.is_present(self.ADD_BUTTON).click()
+        self.wait_page_loaded()
         new_record_data = self.__filling_form_fields()
         self.is_clickable(self.SUBMIT_BUTTON).click()
 
@@ -195,4 +197,30 @@ class WebTablesPage(BasePage):
 
         rows_count = len(self.are_present(self.ONE_ROW))
         return rows_count
+
+
+class ButtonsPage(BasePage):
+    DOUBLE_CLICK_BUTTON = (By.CSS_SELECTOR, 'button[id="doubleClickBtn"]')
+    RIGHT_CLICK_BUTTON = (By.CSS_SELECTOR, 'button[id="rightClickBtn"]')
+    ONE_CLICK_BUTTON = (By.XPATH, '//button[text()="Click Me"]')
+
+    OUTPUT_DOUBLE_CLICK = (By.CSS_SELECTOR, 'p[id="doubleClickMessage"]')
+    OUTPUT_RIGHT_CLICK = (By.CSS_SELECTOR, 'p[id="rightClickMessage"]')
+    OUTPUT_CLICK = (By.CSS_SELECTOR, 'p[id="dynamicClickMessage"]')
+
+    def do_click(self, click_type):
+        if click_type == 'double_click':
+            self.double_click(self.DOUBLE_CLICK_BUTTON)
+            output_message = self.is_present(self.OUTPUT_DOUBLE_CLICK).text
+            return output_message
+        if click_type == 'right_click':
+            self.right_click(self.RIGHT_CLICK_BUTTON)
+            output_message = self.is_present(self.OUTPUT_RIGHT_CLICK).text
+            return output_message
+        if click_type == 'click':
+            self.is_clickable(self.ONE_CLICK_BUTTON).click()
+            output_message = self.is_present(self.OUTPUT_CLICK).text
+            return output_message
+
+
 
