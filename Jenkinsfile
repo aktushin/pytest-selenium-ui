@@ -10,6 +10,8 @@ pipeline{
                 sh "pytest --browser chrome"
             }
         }
+    }
+}
 post{
     always{
         allure([
