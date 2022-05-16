@@ -12,7 +12,7 @@ pipeline{
     
         stage('start-tests'){
             steps{
-                sh "python3 -m pytest -sv --browser chrome -n 3"
+                sh "python3 -m pytest -sv --browser chrome -n 3 --headless True"
             }
         }
     }
