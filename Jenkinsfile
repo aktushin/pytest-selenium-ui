@@ -11,7 +11,7 @@ pipeline{
         }
         stage('start-tests'){
             steps{
-                sh "python3 pytest --browser chrome"
+                sh "pytest --browser chrome"
             }
         }
     }
