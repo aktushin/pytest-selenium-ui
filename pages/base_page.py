@@ -15,6 +15,7 @@ class BasePage:
 
     def open(self, url):
         self.driver.get(url)
+        self.wait_page_loaded()
         logger.debug(f'Go to URL {url}')
 
     def is_present(self, locator):
@@ -30,7 +31,7 @@ class BasePage:
             )
             logger.debug(f'Element with locator {locator} was found.')
         except TimeoutException:
-            msg = f'TIMEOUT EXCEPTION! Element with locator {locator} not found. Check locator or increase timeout.'
+            msg = f'TimeoutException! Element with locator {locator} not found. Check locator or increase timeout.'
             logger.error(msg)
             raise Exception(msg)
 
@@ -50,7 +51,7 @@ class BasePage:
             )
             logger.debug(f'Element with locator {locator} was found.')
         except TimeoutException:
-            msg = f'TIMEOUT EXCEPTION! Element with locator {locator} not found. Check locator or increase timeout.'
+            msg = f'TimeoutException! Element with locator {locator} not found. Check locator or increase timeout.'
             logger.error(msg)
             raise Exception(msg)
 
@@ -70,7 +71,7 @@ class BasePage:
             )
             logger.debug(f'Element with locator {locator} was found.')
         except TimeoutException:
-            msg = f'TIMEOUT EXCEPTION! Element with locator {locator} not found. Maybe, element not clickable?'
+            msg = f'TimeoutException. Element with locator {locator} not found. Maybe, element is not clickable?'
             logger.error(msg)
             raise Exception(msg)
 
@@ -89,7 +90,7 @@ class BasePage:
             )
             logger.debug(f'Element with locator {locator} was found.')
         except TimeoutException:
-            msg = f'TIMEOUT EXCEPTION! Element with locator {locator} not found. Check locator or increase timeout.'
+            msg = f'TimeoutException! Element with locator {locator} not found. Check locator or increase timeout.'
             logger.error(msg)
             raise Exception(msg)
 
@@ -109,13 +110,13 @@ class BasePage:
             )
             logger.debug(f'Element with locator {locator} was found.')
         except TimeoutException:
-            msg = f'TIMEOUT EXCEPTION! Element with locator {locator} not found. Check locator or increase timeout.'
+            msg = f'TimeoutException! Element with locator {locator} not found. Check locator or increase timeout.'
             logger.error(msg)
             raise Exception(msg)
 
         return elements
 
-    def go_to_element(self, element):
+    def scroll_to_element(self, element):
         self.driver.execute_script('arguments[0].ScrollIntoView;', element)
 
     def send_keys(self, locator, keys):
@@ -146,6 +147,32 @@ class BasePage:
 
         actions = ActionChains(self.driver)
         actions.double_click(element).perform()
+
+    def open_new_tab(self, url=''):
+        current_tab = self.driver.current_window_handle
+        current_tab_number = self.driver.window_handles.index(current_tab)
+        new_tab_number = current_tab_number + 1
+        self.driver.execute_script(f'''window.open("{url}", "_blank");''')
+        self.switch_to_tab(new_tab_number)
+        self.wait_page_loaded()
+
+    def switch_to_tab(self, tab_number=None, first_tab=False, right_tab=False, left_tab=False):
+        try:
+            if first_tab:
+                tab_number = 0
+            if right_tab:
+                current_tab = self.driver.current_window_handle
+                handles_list = self.driver.window_handles
+                tab_number = handles_list.index(current_tab) + 1
+            if left_tab:
+                current_tab = self.driver.current_window_handle
+                handles_list = self.driver.window_handles
+                tab_number = handles_list.index(current_tab) - 1
+
+            self.driver.switch_to.window(self.driver.window_handles[tab_number])
+        except IndexError:
+            tab_number = 0
+            self.driver.switch_to.window(self.driver.window_handles[tab_number])
 
     def wait_page_loaded(self):
         page_loaded = False
