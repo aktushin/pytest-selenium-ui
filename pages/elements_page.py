@@ -1,7 +1,6 @@
 import random
 
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.action_chains import ActionChains
 
 from pages.base_page import BasePage
 from data.data import InputData
@@ -32,6 +31,7 @@ class TextBoxPage(BasePage):
         self.send_keys(self.CURRENT_ADDRESS, current_address)
         self.send_keys(self.PERMANENT_ADDRESS, permanent_address)
         self.is_clickable(self.SUBMIT_BUTTON).click()
+        self.wait_page_loaded()
         input_data = [full_name, email, current_address, permanent_address]
         logger.debug(f'Filling form fields with data: {input_data}')
         return input_data
@@ -151,6 +151,7 @@ class WebTablesPage(BasePage):
         self.wait_page_loaded()
         new_record_data = self.__filling_form_fields()
         self.is_clickable(self.SUBMIT_BUTTON).click()
+        self.wait_page_loaded()
 
         return new_record_data
 
@@ -165,6 +166,7 @@ class WebTablesPage(BasePage):
     def search_record(self, keys):
         self.send_keys(self.SEARCH_FIELD, keys)
         self.is_present(self.SEARCH_BUTTON).click()
+        self.wait_page_loaded()
         search_result = self.get_table_data()
 
         return search_result
@@ -175,8 +177,10 @@ class WebTablesPage(BasePage):
     def edit_record(self):
 
         self.is_present(self.EDIT_BUTTON).click()
+        self.wait_page_loaded()
         new_record_data = self.__filling_form_fields()
         self.is_clickable(self.SUBMIT_BUTTON).click()
+        self.wait_page_loaded()
 
         return new_record_data
 
@@ -221,6 +225,3 @@ class ButtonsPage(BasePage):
             self.is_clickable(self.ONE_CLICK_BUTTON).click()
             output_message = self.is_present(self.OUTPUT_CLICK).text
             return output_message
-
-
-

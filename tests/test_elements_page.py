@@ -1,5 +1,3 @@
-import time
-
 import pytest
 
 from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablesPage, ButtonsPage
@@ -88,7 +86,7 @@ class TestElementsPage:
             new_data = web_table_page.edit_record()
             table_data = web_table_page.get_table_data()
 
-            assert new_data in table_data
+            assert new_data in table_data, 'Data was not changed'
 
         @pytest.mark.parametrize('input_rows_count', [5, 10, 20, 25, 50, 100])
         def test_change_rows_count(self, driver, input_rows_count):
@@ -100,8 +98,6 @@ class TestElementsPage:
 
             assert input_rows_count == output_rows_count
 
-            time.sleep(3)
-
         @pytest.mark.parametrize('input_rows_count', [5, 10, 20, 25, 50, 100])
         def test_return_back_rows_count(self, driver, input_rows_count):
             web_table_page = WebTablesPage(driver)
@@ -111,7 +107,7 @@ class TestElementsPage:
             web_table_page.select_rows_count(10)
             output_rows_count = web_table_page.check_rows_count()
 
-            assert output_rows_count == 10
+            assert output_rows_count == 10, 'Rows count was not returned back'
 
     class TestButtons:
 
