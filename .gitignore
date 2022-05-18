@@ -100,3 +100,4 @@ tests/test_debug.py
 debug.py
 geckodriver.log
 logs/
+allure-results/

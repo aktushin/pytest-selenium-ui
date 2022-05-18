@@ -38,7 +38,8 @@ class BasePage:
         return element
 
     def is_visible(self, locator):
-        """ An expectation for checking that an element is present on the DOM of a
+        """
+        An expectation for checking that an element is present on the DOM of a
         page and visible. Visibility means that the element is not only displayed
         but also has a height and width that is greater than 0.
         :param locator: used to find the element
@@ -78,8 +79,8 @@ class BasePage:
         return element
 
     def are_present(self, locator):
-        """ An expectation for checking that there is at least one element present
-            on a web page.
+        """
+        An expectation for checking that there is at least one element present on a web page.
         :param locator: used to find the element
         :return: WebElement
         """
@@ -97,7 +98,8 @@ class BasePage:
         return elements
 
     def are_visible(self, locator):
-        """ An expectation for checking that all elements are present on the DOM of a
+        """
+        An expectation for checking that all elements are present on the DOM of a
         page and visible. Visibility means that the elements are not only displayed
         but also has a height and width that is greater than 0.
         :param locator: used to find the element
@@ -120,6 +122,12 @@ class BasePage:
         self.driver.execute_script('arguments[0].ScrollIntoView;', element)
 
     def send_keys(self, locator, keys):
+        """
+        Sends keys to current focused element. Before that clears the selected field from characters
+        :param locator: used to find the element
+        :param keys: keys to send
+        """
+
         element = self.is_clickable(locator)
         element.click()
         element.clear()
@@ -150,6 +158,11 @@ class BasePage:
         actions.double_click(element).perform()
 
     def open_new_tab(self, url=''):
+        """
+        Open new tab in browser and switches to it.
+        :param url: url to be opened in new tab
+        """
+
         current_tab = self.driver.current_window_handle
         current_tab_number = self.driver.window_handles.index(current_tab)
         new_tab_number = current_tab_number + 1
@@ -159,6 +172,15 @@ class BasePage:
         logger.debug(f'Open new tab with number {new_tab_number}')
 
     def switch_to_tab(self, tab_number=None, first_tab=False, right_tab=False, left_tab=False):
+        """
+        Switch focus to desired tab
+
+        :param tab_number: tab number to switch to
+        :param first_tab: switch to first tab
+        :param right_tab: switch to the right tab relative to the current one
+        :param left_tab: switch to the left tab relative to the current one
+        """
+
         try:
             if first_tab:
                 tab_number = 0

@@ -6,6 +6,8 @@ from config import config
 
 class TestTextBox:
     def test_filling_text_boxes(self, driver):
+        """Filling all text fields"""
+
         text_box_page = TextBoxPage(driver)
         text_box_page.open(config.TEXT_BOX_URL)
 
@@ -17,6 +19,8 @@ class TestTextBox:
 
 class TestCheckBox:
     def test_check_boxes(self, driver):
+        """Select random check boxes and assert that output titles match"""
+
         check_box_page = CheckBoxPage(driver)
         check_box_page.open(config.CHECK_BOX_URL)
 
@@ -29,6 +33,8 @@ class TestCheckBox:
 
 class TestRadioButtons:
     def test_yes_radio_button(self, driver):
+        """Check that 'Yes' radiobutton works"""
+
         rb_page = RadioButtonPage(driver)
         rb_page.open(config.RADIO_BUTTON_URL)
         output_result = rb_page.click_on_radiobutton('yes')
@@ -36,6 +42,8 @@ class TestRadioButtons:
         assert output_result == 'Yes', "Radio button 'Yes' was not selected"
 
     def test_impressive_radio_button(self, driver):
+        """Check that 'Impressive' radiobutton works"""
+
         rb_page = RadioButtonPage(driver)
         rb_page.open(config.RADIO_BUTTON_URL)
         output_result = rb_page.click_on_radiobutton('impressive')
@@ -43,6 +51,8 @@ class TestRadioButtons:
         assert output_result == 'Impressive', "Radio button 'Impressive' was not selected"
 
     def test_no_radio_button(self, driver):
+        """Check that 'No' radiobutton works"""
+
         rb_page = RadioButtonPage(driver)
         rb_page.open(config.RADIO_BUTTON_URL)
         output_result = rb_page.click_on_radiobutton('no')
@@ -52,6 +62,8 @@ class TestRadioButtons:
 
 class TestWebTables:
     def test_add_new_record(self, driver):
+        """Adding new record and assert that it in table"""
+
         web_table_page = WebTablesPage(driver)
         web_table_page.open(config.WEB_TABLES_URL)
 
@@ -61,6 +73,8 @@ class TestWebTables:
         assert new_record_data in table_data, 'New record not added'
 
     def test_search_record(self, driver):
+        """Search record in table by email"""
+
         web_table_page = WebTablesPage(driver)
         web_table_page.open(config.WEB_TABLES_URL)
 
@@ -70,6 +84,8 @@ class TestWebTables:
         assert email in str(search_result), 'Record was not found in table'
 
     def test_delete_record(self, driver):
+        """Delete record from table"""
+
         web_table_page = WebTablesPage(driver)
         web_table_page.open(config.WEB_TABLES_URL)
 
@@ -81,6 +97,8 @@ class TestWebTables:
         assert record_for_delete not in str(table_data), f'Record with data {record_for_delete} was not deleted'
 
     def test_edit_record(self, driver):
+        """Edit record and check that fields are fields have changed in the table """
+
         web_table_page = WebTablesPage(driver)
         web_table_page.open(config.WEB_TABLES_URL)
 
@@ -93,6 +111,8 @@ class TestWebTables:
 
     @pytest.mark.parametrize('input_rows_count', [5, 10, 20, 25, 50, 100])
     def test_change_rows_count(self, driver, input_rows_count):
+        """Select rows count from 5 to 100 """
+
         web_table_page = WebTablesPage(driver)
         web_table_page.open(config.WEB_TABLES_URL)
 
@@ -103,6 +123,8 @@ class TestWebTables:
 
     @pytest.mark.parametrize('input_rows_count', [5, 10, 20, 25, 50, 100])
     def test_return_back_rows_count(self, driver, input_rows_count):
+        """Select rows count from list and after trying to return them back"""
+
         web_table_page = WebTablesPage(driver)
         web_table_page.open(config.WEB_TABLES_URL)
 
@@ -118,6 +140,8 @@ class TestButtons:
                                                                 ('right_click', 'You have done a right click'),
                                                                 ('click', 'You have done a dynamic click')])
     def test_various_clicks(self, driver, click_type, exp_output_message):
+        """Testing doubleclick, right click and click buttons"""
+
         buttons_page = ButtonsPage(driver)
         buttons_page.open(config.BUTTONS_URL)
 
@@ -128,6 +152,8 @@ class TestButtons:
 
 class TestLinks:
     def test_new_tab_link(self, driver):
+        """Click on link which should open in a new tab """
+
         links_page = LinksPage(driver)
         links_page.open(config.LINKS_URL)
         links_page.new_tab_link()
