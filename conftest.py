@@ -1,4 +1,6 @@
 import pytest
+import allure
+from allure_commons.types import AttachmentType
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.firefox.service import Service as FirefoxService
@@ -9,10 +11,21 @@ from selenium.webdriver.chrome.options import Options as ChromeOptions
 
 def pytest_addoption(parser):
     parser.addoption('--browser', action='store', default='chrome', help='Choose browser: chrome or firefox')
-    parser.addoption('--headless', action='store', default=False, help='Type True for activate headless mode')
+    parser.addoption('--headless', action='store_true', default=False, help='Type True for activate headless mode')
 
 
-@pytest.fixture
+@pytest.hookimpl(hookwrapper=True, tryfirst=True)
+def pytest_runtest_makereport(item, call):
+    # This function helps to detect that some test failed
+    # and pass this information to teardown:
+
+    outcome = yield
+    rep = outcome.get_result()
+    setattr(item, "rep_" + rep.when, rep)
+    return rep
+
+
+@pytest.fixture()
 def driver(request):
     driver = None
     browser_name = request.config.getoption('browser')
@@ -31,4 +44,11 @@ def driver(request):
 
     yield driver
 
+    if request.node.rep_call.failed:
+
+        allure.attach(driver.get_screenshot_as_png(),
+                      name=request.function.__name__,
+                      attachment_type=AttachmentType.PNG
+                      )
     driver.quit()
+

@@ -225,3 +225,20 @@ class ButtonsPage(BasePage):
             self.is_clickable(self.ONE_CLICK_BUTTON).click()
             output_message = self.is_present(self.OUTPUT_CLICK).text
             return output_message
+
+
+class LinksPage(BasePage):
+    NEW_TAB_LINK = (By.CSS_SELECTOR, 'a[id="simpleLink"]')
+    CREATED = (By.CSS_SELECTOR, 'a[id="created"]')
+    NO_CONTENT = (By.CSS_SELECTOR, 'a[id="no-content"]')
+    MOVED = (By.CSS_SELECTOR, 'a[id="moved"]')
+    BAD_REQUEST = (By.CSS_SELECTOR, 'a[id="bad-request"')
+    UNAUTHORIZED = (By.CSS_SELECTOR, 'a[id="unauthorized"]')
+    FORBIDDEN = (By.CSS_SELECTOR, 'a[id="forbidden"]')
+    NOT_FOUND = (By.CSS_SELECTOR, 'a[id="invalid-url"]')
+
+    def new_tab_link(self):
+        self.is_clickable(self.NEW_TAB_LINK).click()
+        self.wait_page_loaded()
+        self.switch_to_tab(right_tab=True)
+
