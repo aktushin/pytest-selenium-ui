@@ -143,6 +143,7 @@ class WebTablesPage(BasePage):
         self.send_keys(self.AGE, age)
         self.send_keys(self.SALARY, salary)
         self.send_keys(self.DEPARTMENT, department)
+        logger.debug(f'Sending data: {first_name=}, {last_name=}, {email=}, {age=}, {salary=}, {department=}')
 
         return [first_name, last_name, str(age), email, str(salary), department]
 
@@ -152,6 +153,7 @@ class WebTablesPage(BasePage):
         new_record_data = self.__filling_form_fields()
         self.is_clickable(self.SUBMIT_BUTTON).click()
         self.wait_page_loaded()
+        logger.debug('Added new record in table')
 
         return new_record_data
 

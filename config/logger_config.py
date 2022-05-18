@@ -1,23 +1,25 @@
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+LOGGERS_LOG_LEVEL = 'WARNING'  # 'INFO', 'DEBUG', 'WARNING', 'ERROR', 'CRITICAL'
+HANDLERS_LOG_LEVEL = 'WARNING'  # 'INFO', 'DEBUG', 'WARNING', 'ERROR', 'CRITICAL'
 
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
     'formatters': {
         'standard': {
-            'format': '%(asctime)s | [%(levelname)s] | in method: %(funcName)s | %(filename)s:%(lineno)s | %(message)s'
+            'format': '%(asctime)s | [%(levelname)s] | in module: %(module)s | %(filename)s:%(lineno)s | %(message)s'
         }
     },
     'handlers': {
         'std': {
-            'level': 'DEBUG',
+            'level': f'{HANDLERS_LOG_LEVEL}',
             'class': 'logging.StreamHandler',
             'formatter': 'standard',
         },
         'file': {
-            'level': 'DEBUG',
+            'level': f'{HANDLERS_LOG_LEVEL}',
             'class': 'logging.handlers.RotatingFileHandler',
             'maxBytes': 104857600,
             'backupCount': 3,
@@ -28,7 +30,7 @@ LOGGING = {
     'loggers': {
         'logger': {
             'handlers': ['std', 'file'],
-            'level': 'WARNING',
+            'level': f'{LOGGERS_LOG_LEVEL}',
             'propagate': False
         },
     }

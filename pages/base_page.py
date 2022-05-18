@@ -88,7 +88,7 @@ class BasePage:
             elements = WebDriverWait(self.driver, TIMEOUT).until(
                 ec.presence_of_all_elements_located(locator)
             )
-            logger.debug(f'Element with locator {locator} was found.')
+            logger.debug(f'Elements with locator {locator} were found.')
         except TimeoutException:
             msg = f'TimeoutException! Element with locator {locator} not found. Check locator or increase timeout.'
             logger.error(msg)
@@ -108,7 +108,7 @@ class BasePage:
             elements = WebDriverWait(self.driver, TIMEOUT).until(
                 ec.visibility_of_all_elements_located(locator)
             )
-            logger.debug(f'Element with locator {locator} was found.')
+            logger.debug(f'Elements with locator {locator} were found.')
         except TimeoutException:
             msg = f'TimeoutException! Element with locator {locator} not found. Check locator or increase timeout.'
             logger.error(msg)
@@ -126,7 +126,8 @@ class BasePage:
         element.send_keys(keys)
 
     def current_url(self):
-        return self.driver.current_url
+        current_url = self.driver.current_url
+        logger.debug(f'Current url is {current_url}')
 
     def click(self, locator):
         element = self.is_clickable(locator)
@@ -155,6 +156,7 @@ class BasePage:
         self.driver.execute_script(f'''window.open("{url}", "_blank");''')
         self.switch_to_tab(new_tab_number)
         self.wait_page_loaded()
+        logger.debug(f'Open new tab with number {new_tab_number}')
 
     def switch_to_tab(self, tab_number=None, first_tab=False, right_tab=False, left_tab=False):
         try:
