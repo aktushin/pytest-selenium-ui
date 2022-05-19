@@ -20,10 +20,14 @@ Classes includes helpers methods for specific page.
 
 [data/data.py](data/data.py) - contains input data for tests.
 
+[.env](.env) - example of file with credentials (username and password). Variables from this file are then used as environment variables
+
 # How to run tests
 You should have python 3.10 version or later.
 
 Using a Python virtual env is recommended.
+
+For run tests from tests/test_login_page.py create .env file and add credentials.
 
 1) Install all requirements:
 
