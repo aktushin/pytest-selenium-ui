@@ -1,10 +1,14 @@
+import allure
 import pytest
 
-from pages.elements_page import TextBoxPage,CheckBoxPage, RadioButtonPage, WebTablesPage, ButtonsPage, LinksPage
+from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablesPage, ButtonsPage, LinksPage
 from config import config
 
 
+@allure.suite('Test Elements block')
 class TestTextBox:
+    @allure.title('Filling text box fields')
+    @allure.description
     def test_filling_text_boxes(self, driver):
         """Filling all text fields"""
 
@@ -17,7 +21,10 @@ class TestTextBox:
         assert input_data == output_data, "input and output data don't match"
 
 
+@allure.suite('Test Elements block')
 class TestCheckBox:
+    @allure.title('Test check boxes')
+    @allure.description
     def test_check_boxes(self, driver):
         """Select random check boxes and assert that output titles match"""
 
@@ -31,7 +38,10 @@ class TestCheckBox:
         assert selected_titles == output_titles, "Selected titles don't match with output titles"
 
 
+@allure.suite('Test Elements block')
 class TestRadioButtons:
+    @allure.title('Click on yes radiobutton')
+    @allure.description
     def test_yes_radio_button(self, driver):
         """Check that 'Yes' radiobutton works"""
 
@@ -41,6 +51,8 @@ class TestRadioButtons:
 
         assert output_result == 'Yes', "Radio button 'Yes' was not selected"
 
+    @allure.title('Click on impressive radiobutton')
+    @allure.description
     def test_impressive_radio_button(self, driver):
         """Check that 'Impressive' radiobutton works"""
 
@@ -50,6 +62,8 @@ class TestRadioButtons:
 
         assert output_result == 'Impressive', "Radio button 'Impressive' was not selected"
 
+    @allure.title('Click on no radiobutton')
+    @allure.description
     def test_no_radio_button(self, driver):
         """Check that 'No' radiobutton works"""
 
@@ -60,7 +74,10 @@ class TestRadioButtons:
         assert output_result == 'No', "Radio button 'No' was not selected"
 
 
+@allure.suite('Test Elements block')
 class TestWebTables:
+    @allure.title('Add new record in table')
+    @allure.description
     def test_add_new_record(self, driver):
         """Adding new record and assert that it in table"""
 
@@ -72,6 +89,8 @@ class TestWebTables:
 
         assert new_record_data in table_data, 'New record not added'
 
+    @allure.title('Search record')
+    @allure.description
     def test_search_record(self, driver):
         """Search record in table by email"""
 
@@ -83,6 +102,8 @@ class TestWebTables:
 
         assert email in str(search_result), 'Record was not found in table'
 
+    @allure.title('Delete record from table')
+    @allure.description
     def test_delete_record(self, driver):
         """Delete record from table"""
 
@@ -96,6 +117,8 @@ class TestWebTables:
 
         assert record_for_delete not in str(table_data), f'Record with data {record_for_delete} was not deleted'
 
+    @allure.title('Edit record')
+    @allure.description
     def test_edit_record(self, driver):
         """Edit record and check that fields are fields have changed in the table """
 
@@ -109,6 +132,8 @@ class TestWebTables:
 
         assert new_data in table_data, 'Data was not changed'
 
+    @allure.title('Change rows count')
+    @allure.description
     @pytest.mark.parametrize('input_rows_count', [5, 10, 20, 25, 50, 100])
     def test_change_rows_count(self, driver, input_rows_count):
         """Select rows count from 5 to 100 """
@@ -121,6 +146,8 @@ class TestWebTables:
 
         assert input_rows_count == output_rows_count
 
+    @allure.title('Return back rows count')
+    @allure.description
     @pytest.mark.parametrize('input_rows_count', [5, 10, 20, 25, 50, 100])
     def test_return_back_rows_count(self, driver, input_rows_count):
         """Select rows count from list and after trying to return them back"""
@@ -135,10 +162,15 @@ class TestWebTables:
         assert output_rows_count == 10, 'Rows count was not returned back'
 
 
+@allure.suite('Test Elements block')
 class TestButtons:
-    @pytest.mark.parametrize('click_type, exp_output_message', [('double_click', 'You have done a double click'),
-                                                                ('right_click', 'You have done a right click'),
-                                                                ('click', 'You have done a dynamic click')])
+    click_type_and_expected_msg = [('double_click', 'You have done a double click'),
+                                   ('right_click', 'You have done a right click'),
+                                   ('click', 'You have done a dynamic click')]
+
+    @allure.title('Test various clicks')
+    @allure.description
+    @pytest.mark.parametrize('click_type, exp_output_message', click_type_and_expected_msg)
     def test_various_clicks(self, driver, click_type, exp_output_message):
         """Testing doubleclick, right click and click buttons"""
 
@@ -150,7 +182,10 @@ class TestButtons:
         assert output_message == exp_output_message, 'Wrong click type'
 
 
+@allure.suite('Test Elements block')
 class TestLinks:
+    @allure.title('New tab link')
+    @allure.description
     def test_new_tab_link(self, driver):
         """Click on link which should open in a new tab """
 

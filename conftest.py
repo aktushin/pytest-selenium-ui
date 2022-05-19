@@ -12,6 +12,8 @@ from selenium.webdriver.edge.service import Service as EdgeService
 from selenium.webdriver.edge.options import Options as EdgeOptions
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
 
+from config.config import logger
+
 
 def pytest_addoption(parser):
     parser.addoption('--browser', action='store', default='chrome', help='Choose browser: chrome, firefox or edge')
@@ -19,7 +21,7 @@ def pytest_addoption(parser):
 
 
 @pytest.hookimpl(hookwrapper=True, tryfirst=True)
-def pytest_runtest_makereport(item, call):
+def pytest_runtest_makereport(item):
     # This function helps to detect that some test failed
     # and pass this information to teardown:
 
@@ -41,7 +43,7 @@ def driver(request):
         chrome_options.add_argument('--window-size=1920,1080')
         driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=chrome_options)
 
-    if browser_name == 'firefox':
+    elif browser_name == 'firefox':
         firefox_options = FirefoxOptions()
         if headless_mode:
             firefox_options.add_argument('--headless')
@@ -50,7 +52,7 @@ def driver(request):
         driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()), options=firefox_options)
         # driver.maximize_window()
 
-    if browser_name == 'edge':
+    elif browser_name == 'edge':
         edge_options = EdgeOptions()
         if headless_mode:
             edge_options.add_argument('--headless')
@@ -58,12 +60,17 @@ def driver(request):
         # edge_options.add_argument('--start-maximized')
         driver = webdriver.Edge(service=EdgeService(EdgeChromiumDriverManager().install()), options=edge_options)
 
+    else:
+        logger.error('Unexpected browser. Supports browsers: chrome, firefox, edge')
+
     yield driver
 
     if request.node.rep_call.failed:
+        try:
+            allure.attach(driver.get_screenshot_as_png(), name=request.function.__name__,
+                          attachment_type=AttachmentType.PNG
+                          )
+        except Exception as e:
+            logger.error(e)
 
-        allure.attach(driver.get_screenshot_as_png(), name=request.function.__name__,
-                      attachment_type=AttachmentType.PNG
-                      )
     driver.quit()
-
