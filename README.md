@@ -32,7 +32,7 @@ For run tests from tests/test_login_page.py create .env file and add credentials
 1) Install all requirements:
 
     ```bash
-    pip3 install -r requirements
+    pip3 install -r requirements.txt
     ```
    
 2) ### For run tests with UI:
