@@ -5,8 +5,8 @@ from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import TimeoutException, ElementClickInterceptedException
 
-from config.config import logger
-from config.config import TIMEOUT
+from configs.config import logger
+from configs.config import TIMEOUT
 
 
 class BasePage:

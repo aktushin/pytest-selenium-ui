@@ -3,7 +3,7 @@ import logging.config
 
 from dotenv import load_dotenv
 
-from config.logger_config import LOGGING
+from configs.logger_config import LOGGING
 
 load_dotenv()
 

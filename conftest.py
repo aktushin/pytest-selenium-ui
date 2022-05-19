@@ -12,7 +12,7 @@ from selenium.webdriver.edge.service import Service as EdgeService
 from selenium.webdriver.edge.options import Options as EdgeOptions
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
 
-from config.config import logger
+from configs.config import logger
 
 
 def pytest_addoption(parser):

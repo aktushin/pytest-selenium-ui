@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 
 from pages.base_page import BasePage
 from data.data import InputData
-from config.config import logger
+from configs.config import logger
 
 
 class TextBoxPage(BasePage):
