@@ -31,7 +31,7 @@ Using a Python virtual env is recommended.
     pip3 install -r requirements
     ```
    
-2) ###For run tests with UI:
+2) ### For run tests with UI:
     ```bash
     pytest --browser [chrome, firefox or edge]
     ```
@@ -40,11 +40,11 @@ Using a Python virtual env is recommended.
     pytest --browser chrome
     ```
 
-3) ###For run tests in headless mode:
+3) ### For run tests in headless mode:
     ```bash
     pytest --browser chrome --headless
     ```
-4) ###For run tests in parallel:
+4) ### For run tests in parallel:
     ```bash
     pytest --browser chrome -n <NUM>
     ```
@@ -54,7 +54,7 @@ Using a Python virtual env is recommended.
     ```
    That command will run 3 browsers instance in parallel.
 
-5) ###Rerun failed tests:
+5) ### Rerun failed tests:
     ```bash
     pytest --browser chrome --reruns <NUM>
     ```
