@@ -159,4 +159,4 @@ class TestLinks:
         links_page.new_tab_link()
         current_url = links_page.current_url()
 
-        assert current_url == 'https://demoqa.com/', "Link was not open in a new tab"
+        assert current_url == 'https://demoqa.com/', "Link was not opened in a new tab"

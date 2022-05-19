@@ -136,6 +136,7 @@ class BasePage:
     def current_url(self):
         current_url = self.driver.current_url
         logger.debug(f'Current url is {current_url}')
+        return current_url
 
     def click(self, locator):
         element = self.is_clickable(locator)

@@ -10,4 +10,3 @@ class TestLoginPage:
         current_url = login_page.current_url()
 
         assert current_url == 'https://demoqa.com/profile'
-
