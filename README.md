@@ -41,10 +41,12 @@ Using a Python virtual env is recommended.
     ```
 
 3) ### For run tests in headless mode:
+    Use flag --headless
     ```bash
     pytest --browser chrome --headless
     ```
 4) ### For run tests in parallel:
+    Use flag -n
     ```bash
     pytest --browser chrome -n <NUM>
     ```
@@ -55,6 +57,7 @@ Using a Python virtual env is recommended.
    That command will run 3 browsers instance in parallel.
 
 5) ### Rerun failed tests:
+    Use flag --reruns
     ```bash
     pytest --browser chrome --reruns <NUM>
     ```
