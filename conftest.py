@@ -40,6 +40,7 @@ def driver(request):
         chrome_options = ChromeOptions()
         if headless_mode:
             chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--no-sandbox')
         chrome_options.add_argument('--window-size=1920,1080')
         driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=chrome_options)
 
