@@ -14,7 +14,7 @@ pipeline{
                 steps{
                     script{
                         sh "docker build -t chrome-last --target chrome_last ."
-                        sh "docker run chrome-last --rm --shm-size='4g' --browser chrome --headless -n 2 --alluredir=allure-results"
+                        sh "docker run --rm --shm-size='4g' chrome-last --browser chrome --headless -n 2 --alluredir=allure-results"
                     }
                 }
                 post{
@@ -36,7 +36,7 @@ pipeline{
                 steps{
                     script{
                         sh "docker build -t firefox-last --target firefox_last ."
-                        sh "docker run firefox-last --rm --shm-size='4g' --browser firefox --headless -n 2 --alluredir=allure-results"
+                        sh "docker run --rm --shm-size='4g' firefox-last --browser firefox --headless -n 2 --alluredir=allure-results"
                     }
                 }
                 post{
