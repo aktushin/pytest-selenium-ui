@@ -2,27 +2,53 @@ pipeline{
     agent any
 
     stages{
-        stage('prepare-env'){
-            steps{
-                sh "python3 -m venv venv"
-                sh ". venv/bin/activate"
-                sh "pip install -r requirements.txt"
+        stage('ui-tests'){
+            parallel{
+                stage('chrome-last'){
+                    agent{
+                        node{
+                            label "docker"
+                            customWorkspace "workspace/chrome-last"
+                            }
+                        }
+                steps{
+                    script{
+                        sh "docker build -t chrome-last --target chrome_last ."
+                        sh "docker run --rm --shm-size='4g' --browser chrome --headless -n 2 --alluredir=allure-results"
+                    }
+                }
+                post{
+                    always{
+                        allure([
+                            reportBuildPolicy: 'ALWAYS',
+                            results: [[path: '/allure-results']]
+                        ])
+                    }
+                }
             }
-        }
-    
-        stage('start-tests'){
-            steps{
-                sh "python3 -m pytest -sv --browser chrome -n 3 --headless True"
+            stage('firefox-last'){
+                    agent{
+                        node{
+                            label "docker"
+                            customWorkspace "workspace/firefox-last"
+                            }
+                        }
+                steps{
+                    script{
+                        sh "docker build -t firefox-last --target firefox_last ."
+                        sh "docker run --rm --shm-size='4g' --browser firefox --headless -n 2 --alluredir=allure-results"
+                    }
+                }
+                post{
+                    always{
+                        allure([
+                            reportBuildPolicy: 'ALWAYS',
+                            results: [[path: '/allure-results']]
+                        ])
+                    }
+                }
+            }
             }
         }
     }
-
-post{
-    always{
-        allure([
-            reportBuildPolicy: 'ALWAYS',
-            results: [[path: 'allure-results']]
-        ])
-    }
-}
 }
