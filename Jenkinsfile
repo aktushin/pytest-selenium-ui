@@ -1,5 +1,8 @@
 pipeline{
-    agent any
+    agent{
+        label 'docker'
+    }
+    options{ timestamps() }
 
     stages{
         stage('ui-tests'){
