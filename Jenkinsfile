@@ -3,7 +3,8 @@ pipeline{
         label 'docker'
     }
     options{ timestamps() }
-
+    
+    stages{
         parallel{
             stage('chrome-last'){
                 agent{
@@ -50,7 +51,9 @@ pipeline{
                         ])
                     }
                 }
+            }
         }
     }
 }
+        
 
