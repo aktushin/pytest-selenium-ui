@@ -29,27 +29,27 @@ pipeline{
                     }
                 }
             }
-            stage('firefox-last'){
-                    agent{
-                        node{
-                            label "docker"
-                            customWorkspace "workspace/firefox-last"
+                stage('firefox-last'){
+                        agent{
+                            node{
+                                label "docker"
+                                customWorkspace "workspace/firefox-last"
+                                }
                             }
+                    steps{
+                        script{
+                            sh "docker build -t firefox-last --target firefox_last ."
+                            sh "docker run --rm --shm-size='4g' firefox-last --browser firefox --headless -n 2 --alluredir=allure-results"
                         }
-                steps{
-                    script{
-                        sh "docker build -t firefox-last --target firefox_last ."
-                        sh "docker run --rm --shm-size='4g' firefox-last --browser firefox --headless -n 2 --alluredir=allure-results"
                     }
-                }
-                post{
-                    always{
-                        allure([
-                            reportBuildPolicy: 'ALWAYS',
-                            results: [[path: './allure-results']]
-                        ])
+                    post{
+                        always{
+                            allure([
+                                reportBuildPolicy: 'ALWAYS',
+                                results: [[path: './allure-results']]
+                            ])
+                        }
                     }
-                }
             }
             }
         }
