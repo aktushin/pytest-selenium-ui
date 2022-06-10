@@ -17,14 +17,14 @@ pipeline{
                 steps{
                     script{
                         sh "docker build -t chrome-last --target chrome_last ."
-                        sh "docker run --rm --shm-size='4g' chrome-last --browser chrome --headless -n 2 --alluredir=allure-results"
+                        sh "docker run --rm --shm-size='4g' chrome-last --browser chrome --headless -n 2 --alluredir=./allure-results"
                     }
                 }
                 post{
                     always{
                         allure([
                             reportBuildPolicy: 'ALWAYS',
-                            results: [[path: 'build/allure-results']]
+                            results: [[path: './allure-results']]
                         ])
                     }
                 }
@@ -46,7 +46,7 @@ pipeline{
                     always{
                         allure([
                             reportBuildPolicy: 'ALWAYS',
-                            results: [[path: 'build/allure-results']]
+                            results: [[path: './allure-results']]
                         ])
                     }
                 }
