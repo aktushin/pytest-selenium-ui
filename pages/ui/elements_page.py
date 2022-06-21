@@ -3,13 +3,12 @@ import random
 from selenium.webdriver.common.by import By
 
 from pages.ui.base_page import BasePage
-from data.data import InputData
+from data.data import input_data
 from cfg.config import logger
 
 
 class TextBoxPage(BasePage):
-    input_data = InputData()
-
+    input_data = input_data
     FULL_NAME = (By.CSS_SELECTOR, 'input[id="userName"]')
     EMAIL = (By.CSS_SELECTOR, 'input[id="userEmail"]')
     CURRENT_ADDRESS = (By.CSS_SELECTOR, 'textarea[id="currentAddress"]')
@@ -32,9 +31,9 @@ class TextBoxPage(BasePage):
         self.send_keys(self.PERMANENT_ADDRESS, permanent_address)
         self.is_clickable(self.SUBMIT_BUTTON).click()
         self.wait_page_loaded()
-        input_data = [full_name, email, current_address, permanent_address]
-        logger.debug(f'Filling form fields with data: {input_data}')
-        return input_data
+        input_data_list = [full_name, email, current_address, permanent_address]
+        logger.debug(f'Filling form fields with data: {input_data_list}')
+        return input_data_list
 
     def check_output_data(self) -> list:
         output_full_name = self.is_visible(self.OUTPUT_NAME).text.split(':')[1]
@@ -103,7 +102,7 @@ class RadioButtonPage(BasePage):
 
 
 class WebTablesPage(BasePage):
-    input_data = InputData()
+    input_data = input_data
 
     ADD_BUTTON = (By.CSS_SELECTOR, 'button[id="addNewRecordButton"]')
     FIRST_NAME = (By.CSS_SELECTOR, 'input[id="firstName"]')
