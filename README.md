@@ -14,9 +14,9 @@ Classes includes helpers methods for specific page.
 [pages/login_page.py](pages/login_page.py) - contains classes for pages in Book Store Application block for https://demoqa.com.
 Classes includes helpers methods for specific page.
 
-[configs/config](configs/config.py) - contains config for all project: Timeouts, URL's, credentials from .env.
+[cfg/config](cfg/config.py) - contains config for all project: Timeouts, URL's, credentials from .env.
 
-[configs/logger_config.py](configs/logger_config.py) - contains logger config.
+[cfg/logger_config.py](cfg/logger_config.py) - contains logger config.
 
 [data/data.py](data/data.py) - contains input data for tests.
 

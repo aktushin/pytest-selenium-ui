@@ -2,7 +2,7 @@ import allure
 import pytest
 
 from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablesPage, ButtonsPage, LinksPage
-from configs import config
+from cfg import config
 
 
 @allure.suite('Test Elements block')

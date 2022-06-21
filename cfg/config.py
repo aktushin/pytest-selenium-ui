@@ -3,9 +3,14 @@ import logging.config
 
 from dotenv import load_dotenv
 
-from configs.logger_config import LOGGING
+from cfg.logger_config import LOGGING
 
+# load env variables
 load_dotenv()
+
+# logger init
+logging.config.dictConfig(LOGGING)
+logger = logging.getLogger('logger')
 
 
 # Timeouts
@@ -26,5 +31,3 @@ LINKS_URL = 'https://demoqa.com/links'
 USER_NAME = os.getenv('USER_NAME')
 PASSWORD = os.getenv('PASSWORD')
 
-logging.config.dictConfig(LOGGING)
-logger = logging.getLogger('logger')

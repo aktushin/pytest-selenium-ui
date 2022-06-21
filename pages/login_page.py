@@ -1,6 +1,6 @@
 from selenium.webdriver.common.by import By
 
-from configs import config
+from cfg import config
 from pages.base_page import BasePage
 
 

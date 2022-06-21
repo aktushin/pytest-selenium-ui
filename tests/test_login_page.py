@@ -1,6 +1,6 @@
 import allure
 
-from configs.config import LOGIN_URL
+from cfg.config import LOGIN_URL
 from pages.login_page import LoginPage
 
 
