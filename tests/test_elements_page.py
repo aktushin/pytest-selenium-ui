@@ -1,7 +1,7 @@
 import allure
 import pytest
 
-from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablesPage, ButtonsPage, LinksPage
+from pages.ui.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablesPage, ButtonsPage, LinksPage
 from cfg import config
 
 

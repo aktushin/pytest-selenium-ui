@@ -6,12 +6,12 @@ This repository contains example of usage PageObject model with python + pytest.
 
 [conftest.py](conftest.py) - contains all fixtures(driver initiation, make screenshot for failed tests) and custom flags for command line.
 
-[pages/base_page.py](pages/base_page.py) - contains base methods for work with web elements and browser.
+[pages/base_page.py](pages/ui/base_page.py) - contains base methods for work with web elements and browser.
 
-[pages/elements_page.py](pages/elements_page.py) - contains classes for pages in Elements block for https://demoqa.com.
+[pages/elements_page.py](pages/ui/elements_page.py) - contains classes for pages in Elements block for https://demoqa.com.
 Classes includes helpers methods for specific page.
 
-[pages/login_page.py](pages/login_page.py) - contains classes for pages in Book Store Application block for https://demoqa.com.
+[pages/login_page.py](pages/ui/login_page.py) - contains classes for pages in Book Store Application block for https://demoqa.com.
 Classes includes helpers methods for specific page.
 
 [cfg/config](cfg/config.py) - contains config for all project: Timeouts, URL's, credentials from .env.

@@ -1,7 +1,7 @@
 import allure
 
 from cfg.config import LOGIN_URL
-from pages.login_page import LoginPage
+from pages.ui.login_page import LoginPage
 
 
 class TestLoginPage:

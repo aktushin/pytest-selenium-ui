@@ -2,7 +2,7 @@ import random
 
 from selenium.webdriver.common.by import By
 
-from pages.base_page import BasePage
+from pages.ui.base_page import BasePage
 from data.data import InputData
 from cfg.config import logger
 

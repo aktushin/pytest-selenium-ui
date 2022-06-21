@@ -4,7 +4,7 @@ from requests import Response
 from cfg.config import logger
 
 
-class ApiBase:
+class BaseApi:
 
     def get(self, url: str, headers: dict = None, params=None, cookies: str = None) -> Response:
         try:
