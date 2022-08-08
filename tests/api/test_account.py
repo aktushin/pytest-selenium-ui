@@ -6,6 +6,7 @@ from pages.api.account_page import Account
 from data.api_data import AuthData
 
 
+@pytest.mark.api
 class TestAuth:
     auth_data = AuthData()
 

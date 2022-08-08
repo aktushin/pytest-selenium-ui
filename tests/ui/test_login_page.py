@@ -1,9 +1,11 @@
 import allure
+import pytest
 
 from cfg.config import LOGIN_URL
 from pages.ui.login_page import LoginPage
 
 
+@pytest.mark.ui
 class TestLoginPage:
     @allure.suite('Login page')
     @allure.title('Do login')

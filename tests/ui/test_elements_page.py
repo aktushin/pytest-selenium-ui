@@ -5,6 +5,7 @@ from pages.ui.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, W
 from cfg import config
 
 
+@pytest.mark.ui
 @allure.suite('Test Elements block')
 class TestTextBox:
     @allure.title('Filling text box fields')
@@ -20,7 +21,7 @@ class TestTextBox:
 
         assert input_data == output_data, "input and output data don't match"
 
-
+@pytest.mark.ui
 @allure.suite('Test Elements block')
 class TestCheckBox:
     @allure.title('Test check boxes')
@@ -37,7 +38,7 @@ class TestCheckBox:
 
         assert selected_titles == output_titles, "Selected titles don't match with output titles"
 
-
+@pytest.mark.ui
 @allure.suite('Test Elements block')
 class TestRadioButtons:
     @allure.title('Click on yes radiobutton')
@@ -73,7 +74,7 @@ class TestRadioButtons:
 
         assert output_result == 'No', "Radio button 'No' was not selected"
 
-
+@pytest.mark.ui
 @allure.suite('Test Elements block')
 class TestWebTables:
     @allure.title('Add new record in table')
@@ -161,7 +162,7 @@ class TestWebTables:
 
         assert output_rows_count == 10, 'Rows count was not returned back'
 
-
+@pytest.mark.ui
 @allure.suite('Test Elements block')
 class TestButtons:
     click_type_and_expected_msg = [('double_click', 'You have done a double click'),
@@ -181,7 +182,7 @@ class TestButtons:
 
         assert output_message == exp_output_message, 'Wrong click type'
 
-
+@pytest.mark.ui
 @allure.suite('Test Elements block')
 class TestLinks:
     @allure.title('New tab link')
