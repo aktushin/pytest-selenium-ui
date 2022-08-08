@@ -2,14 +2,13 @@ import random
 
 from selenium.webdriver.common.by import By
 
-from pages.base_page import BasePage
-from data.data import InputData
-from configs.config import logger
+from pages.ui.base_page import BasePage
+from data.data import input_data
+from cfg.config import logger
 
 
 class TextBoxPage(BasePage):
-    input_data = InputData()
-
+    input_data = input_data
     FULL_NAME = (By.CSS_SELECTOR, 'input[id="userName"]')
     EMAIL = (By.CSS_SELECTOR, 'input[id="userEmail"]')
     CURRENT_ADDRESS = (By.CSS_SELECTOR, 'textarea[id="currentAddress"]')
@@ -21,7 +20,7 @@ class TextBoxPage(BasePage):
     OUTPUT_CURRENT_ADDRESS = (By.CSS_SELECTOR, 'p[id="currentAddress"]')
     OUTPUT_PERMANENT_ADDRESS = (By.CSS_SELECTOR, 'p[id="permanentAddress"]')
 
-    def filling_fields(self):
+    def filling_fields(self) -> list:
         full_name = self.input_data.NAME
         email = self.input_data.EMAIL
         current_address = self.input_data.ADDRESS.replace('\n', ' ')
@@ -32,11 +31,11 @@ class TextBoxPage(BasePage):
         self.send_keys(self.PERMANENT_ADDRESS, permanent_address)
         self.is_clickable(self.SUBMIT_BUTTON).click()
         self.wait_page_loaded()
-        input_data = [full_name, email, current_address, permanent_address]
-        logger.debug(f'Filling form fields with data: {input_data}')
-        return input_data
+        input_data_list = [full_name, email, current_address, permanent_address]
+        logger.debug(f'Filling form fields with data: {input_data_list}')
+        return input_data_list
 
-    def check_output_data(self):
+    def check_output_data(self) -> list:
         output_full_name = self.is_visible(self.OUTPUT_NAME).text.split(':')[1]
         output_email = self.is_visible(self.OUTPUT_EMAIL).text.split(':')[1]
         output_current_address = self.is_visible(self.OUTPUT_CURRENT_ADDRESS).text.split(':')[1]
@@ -49,7 +48,8 @@ class TextBoxPage(BasePage):
 class CheckBoxPage(BasePage):
     EXPAND_BUTTON = (By.CSS_SELECTOR, 'button[class="rct-option rct-option-expand-all"]')
     ALL_CHECK_BOXES = (By.CSS_SELECTOR, 'span[class="rct-checkbox"]')
-    SELECTED_CHECK_BOXES_TITLES = (By.XPATH, '//*[@class="rct-icon rct-icon-check"]/ancestor::label/child::span[@class="rct-title"]')
+    SELECTED_CHECK_BOXES_TITLES = \
+        (By.XPATH, '//*[@class="rct-icon rct-icon-check"]/ancestor::label/child::span[@class="rct-title"]')
     OUTPUT_CHECK_BOXES_TITLES = (By.CSS_SELECTOR, 'span[class="text-success"]')
 
     def select_random_check_boxes(self):
@@ -63,7 +63,7 @@ class CheckBoxPage(BasePage):
             random_check_box.click()
             count += 1
 
-    def get_selected_check_boxes_titles(self):
+    def get_selected_check_boxes_titles(self) -> list:
         titles = self.are_present(self.SELECTED_CHECK_BOXES_TITLES)
         titles_list = []
 
@@ -73,7 +73,7 @@ class CheckBoxPage(BasePage):
 
         return titles_list
 
-    def get_output_check_boxes_titles(self):
+    def get_output_check_boxes_titles(self) -> list:
         titles = self.are_present(self.OUTPUT_CHECK_BOXES_TITLES)
         titles_list = []
 
@@ -90,7 +90,7 @@ class RadioButtonPage(BasePage):
     NO_RB = (By.CSS_SELECTOR, 'label[for="noRadio"]')
     OUTPUT_RESULT = (By.CSS_SELECTOR, 'span[class="text-success"]')
 
-    def click_on_radiobutton(self, radio_button):
+    def click_on_radiobutton(self, radio_button: str) -> str:
         rb_name = {'yes': self.YES_RB,
                    'impressive': self.IMPRESSIVE_RB,
                    'no': self.NO_RB}
@@ -102,7 +102,7 @@ class RadioButtonPage(BasePage):
 
 
 class WebTablesPage(BasePage):
-    input_data = InputData()
+    input_data = input_data
 
     ADD_BUTTON = (By.CSS_SELECTOR, 'button[id="addNewRecordButton"]')
     FIRST_NAME = (By.CSS_SELECTOR, 'input[id="firstName"]')
@@ -129,7 +129,7 @@ class WebTablesPage(BasePage):
     ROWS_100 = (By.CSS_SELECTOR, 'option[value="100"]')
     ONE_ROW = (By.CSS_SELECTOR, 'div[role="rowgroup"]')
 
-    def __filling_form_fields(self):
+    def __filling_form_fields(self) -> list:
         first_name = self.input_data.FIRST_NAME
         last_name = self.input_data.LAST_NAME
         email = self.input_data.EMAIL
@@ -147,7 +147,7 @@ class WebTablesPage(BasePage):
 
         return [first_name, last_name, str(age), email, str(salary), department]
 
-    def add_new_record(self):
+    def add_new_record(self) -> list:
         self.is_present(self.ADD_BUTTON).click()
         self.wait_page_loaded()
         new_record_data = self.__filling_form_fields()
@@ -157,7 +157,7 @@ class WebTablesPage(BasePage):
 
         return new_record_data
 
-    def get_table_data(self):
+    def get_table_data(self) -> list:
         table_elements = self.are_present(self.TABLE_DATA)
         table_data = []
         for row in table_elements:
@@ -165,7 +165,7 @@ class WebTablesPage(BasePage):
 
         return table_data
 
-    def search_record(self, keys):
+    def search_record(self, keys: str) -> list:
         self.send_keys(self.SEARCH_FIELD, keys)
         self.is_present(self.SEARCH_BUTTON).click()
         self.wait_page_loaded()
@@ -176,7 +176,7 @@ class WebTablesPage(BasePage):
     def delete_record(self):
         self.is_present(self.DELETE_BUTTON).click()
 
-    def edit_record(self):
+    def edit_record(self) -> list:
 
         self.is_present(self.EDIT_BUTTON).click()
         self.wait_page_loaded()
@@ -199,7 +199,7 @@ class WebTablesPage(BasePage):
         self.is_present(self.SELECT_ROWS_COUNT).click()
         self.is_present(rows_dict[input_rows_count]).click()
 
-    def check_rows_count(self):
+    def check_rows_count(self) -> int:
 
         rows_count = len(self.are_present(self.ONE_ROW))
         return rows_count
@@ -214,7 +214,7 @@ class ButtonsPage(BasePage):
     OUTPUT_RIGHT_CLICK = (By.CSS_SELECTOR, 'p[id="rightClickMessage"]')
     OUTPUT_CLICK = (By.CSS_SELECTOR, 'p[id="dynamicClickMessage"]')
 
-    def do_click(self, click_type):
+    def do_click(self, click_type: str) -> str:
         if click_type == 'double_click':
             self.double_click(self.DOUBLE_CLICK_BUTTON)
             output_message = self.is_present(self.OUTPUT_DOUBLE_CLICK).text
@@ -242,5 +242,4 @@ class LinksPage(BasePage):
     def new_tab_link(self):
         self.is_clickable(self.NEW_TAB_LINK).click()
         self.wait_page_loaded()
-        self.switch_to_tab(right_tab=True)
-
+        self.switch_to_tab(next_tab=True)
