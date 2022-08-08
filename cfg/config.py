@@ -30,4 +30,6 @@ LINKS_URL = 'https://demoqa.com/links'
 
 USER_NAME = os.getenv('USER_NAME')
 PASSWORD = os.getenv('PASSWORD')
+INVALID_USER_NAME = 'invalid_user'
+INVALID_PASS = 'invalid_pass'
 

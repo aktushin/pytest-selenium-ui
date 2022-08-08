@@ -1,4 +1,7 @@
+from typing import Type
+
 import requests
+from pydantic import BaseModel, ValidationError
 from requests import Response
 
 from cfg.config import logger
@@ -33,3 +36,10 @@ class BaseApi:
         except Exception as e:
             logger.error(e)
             raise e
+
+    @staticmethod
+    def validator(model: Type[BaseModel], data: str) -> None:
+        try:
+            model.parse_raw(data)
+        except ValidationError as e:
+            logger.error(e.json())
